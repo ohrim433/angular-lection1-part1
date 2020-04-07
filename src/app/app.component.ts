@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import { PostModel } from '../models/PostModel';
+import { PostService } from './services/post.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `<h1>Posts</h1>
+  <app-post *ngFor="let p of posts" [post]="p"></app-post>`,
+  styles: [`h1 {background-color: silver}`]
 })
 export class AppComponent {
-  title = 'angular-lection1-part1';
+  posts: PostModel[];
+
+  constructor(private postService: PostService) {
+    this.postService.getPosts().subscribe(value => this.posts = value);
+  }
 }
